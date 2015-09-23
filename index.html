@@ -1,27 +1,14 @@
 <!DOCTYPE html>
-<html ng-app='app'>
-<!-- Bootstrap -->
-<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
-<!-- Angular -->
-<script type="text/javascript" src='bower_components/angular/angular.js'></script>
-<!-- RealTime data -->
-<!-- <script src="http://cdn.pubnub.com/pubnub-3.7.1.min.js"></script> -->
-<!-- Google Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-<!-- Reference -->
-<script type="text/javascript" src='app.js'></script>
-<link rel="stylesheet" type="text/css" href="main.css">
-
-
+<html>
 <head>
-  <meta charset="utf-8">
-  <title></title>
+	<meta charset="utf-8">
+	<title>Icelandic Busses</title>
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
 </head>
-<body ng-controller='MainController'>
-<div id="map"></div>
-	<div id="class" ng-repeat="marker in markers">
-		<a href="#" ng-click="openInfoWindow($event, marker)">{{marker.title}}</a>
-	</div>
-		<div class="btn btn-info" ng-click="runMarkers()">Run</div>
+<body>
+	<div id="map"></div>
+	<script type="text/javascript" src='app.js'></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=initMap"></script>
 </body>
 </html>
