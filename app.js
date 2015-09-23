@@ -34,11 +34,18 @@ app.controller('MainController', ['$scope', '$http', function($scope, $http){
         
         $scope.markers.push(marker);
     }
-        for(i = 0;i <= 5;i++)
-        {
-        	console.log("hi");
-        	createMarker($scope.busData[i].busses);
+
+        $scope.runMarkers = function() {
+            setTimeout(function(){
+
+                for(i = 0;i <= 5;i++) {
+                    console.log(i);
+                    console.log($scope.busData);
+                    createMarker($scope.busData);
+                }
+            }, 5000);
         }
+        
 
     //     $scope.openInfoWindow = function(e, selectedMarker){
     //     e.preventDefault();
