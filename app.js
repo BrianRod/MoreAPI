@@ -18,4 +18,7 @@ function initMap(){
     });
     console.log('initMap')
     var url = "http://apis.is/bus/realtime";
+    $.get(url, function(data){
+        console.log(data)
+    })
 }
