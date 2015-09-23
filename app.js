@@ -1,55 +1,33 @@
-var app = angular.module('app', []);
+//STEPS
 
-app.controller('MainController', ['$scope', '$http', function($scope, $http){
+//#1 Grab the Google Map from google (we did this in the HTML)
 
-	 $http.get('http://apis.is/bus/realtime').then(function(busData){
-		
-		$scope.busData = busData.data.results;
-        
+//#2 Provide a callback function to construct the map, and place it on the DOM
+
+//#3 Request realtime bus locations,
+
+//#4 Take bus locations, and make markers out of them
+
+function initMap(){
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 64.135491, lng: -21.896149},
+        zoom: 10,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+    });
+
+    $.get("http://apis.is/bus/realtime", function(data){
+        console.log(data)
+        var busnmbr1 = data.results[0];
+        busnmbr1.busses.forEach(function(bus){
+            var busLocale = {
+                lat: bus.x,
+                lng: bus.y
+            };
+            var marker = new google.maps.Marker({
+                map: map,
+                animation: google.maps.Animation.DROP,
+                position: busLocale
+            });
         });
-
-    $scope.markers = [];
-
-	var mapOptions = {
-		zoom: 10,
-		center: new google.maps.LatLng(64.123, -21.788),
-		mapTypeId: google.maps.MapTypeId.TERRAIN
-	}
-
-	map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-	 createMarker = function (info){
-        
-        var marker = new google.maps.Marker({
-            map: $scope.map,
-            position: new google.maps.LatLng(info.x, info.y),
-           	title: info.from + " " + info.to
-        });
-        // marker.content = '<div class="infoWindowContent">' + info.end + '</div>';
-        
-        // google.maps.event.addListener(marker, 'click', function(){
-        // 	infoWindow.setContent('<h2>' + marker.start + '</h2>' + marker.content);
-        // 	infoWindow.open($scope.map, marker);
-        // });
-        
-        $scope.markers.push(marker);
-    }
-
-        $scope.runMarkers = function() {
-            setTimeout(function(){
-
-                for(i = 0;i <= 5;i++) {
-                    console.log(i);
-                    console.log($scope.busData);
-                    createMarker($scope.busData);
-                }
-            }, 5000);
-        }
-        
-
-    //     $scope.openInfoWindow = function(e, selectedMarker){
-    //     e.preventDefault();
-    //     google.maps.event.trigger(selectedMarker, 'click');
-    // }
-
-	}]);
+    });
+};
