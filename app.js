@@ -5,8 +5,10 @@ app.controller('MainController', ['$scope', '$http', function($scope, $http){
 	 $http.get('http://apis.is/bus/realtime').then(function(busData){
 		
 		$scope.busData = busData.data.results;
+        
+        });
 
-		$scope.markers = [];
+    $scope.markers = [];
 
 	var mapOptions = {
 		zoom: 10,
@@ -14,32 +16,33 @@ app.controller('MainController', ['$scope', '$http', function($scope, $http){
 		mapTypeId: google.maps.MapTypeId.TERRAIN
 	}
 
-	$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+	map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-	 var createMarker = function (info){
+	 createMarker = function (info){
         
         var marker = new google.maps.Marker({
             map: $scope.map,
             position: new google.maps.LatLng(info.x, info.y),
-            start: info.from,
-           	end: info.to
+           	title: info.from + " " + info.to
         });
-        marker.content = '<div class="infoWindowContent">' + info.end + '</div>';
+        // marker.content = '<div class="infoWindowContent">' + info.end + '</div>';
         
-        google.maps.event.addListener(marker, 'click', function(){
-        	infoWindow.setContent('<h2>' + marker.start + '</h2>' + marker.content);
-        	infoWindow.open($scope.map, marker);
-        });
+        // google.maps.event.addListener(marker, 'click', function(){
+        // 	infoWindow.setContent('<h2>' + marker.start + '</h2>' + marker.content);
+        // 	infoWindow.open($scope.map, marker);
+        // });
         
         $scope.markers.push(marker);
-        
-        }
-
-        for(i = 0;i < busData.data.results.busses.length;i++)
+    }
+        for(i = 0;i <= 5;i++)
         {
-        	createMarker(busData.data.results.busses[i]);
+        	console.log("hi");
+        	createMarker($scope.busData[i].busses);
         }
 
-	});
-	
-}]);
+    //     $scope.openInfoWindow = function(e, selectedMarker){
+    //     e.preventDefault();
+    //     google.maps.event.trigger(selectedMarker, 'click');
+    // }
+
+	}]);
